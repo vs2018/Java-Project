@@ -4,7 +4,9 @@ public enum MovieFormat {
 
     DVD(ProductState.PHYSICAL),
     BLU_RAY(ProductState.PHYSICAL),
-    STREAM(ProductState.DOWNLOADABLE);
+    STREAM_BUY(ProductState.DOWNLOADABLE),
+    STREAM_RENT(ProductState.DOWNLOADABLE);
+
 
     private final ProductState state;
 

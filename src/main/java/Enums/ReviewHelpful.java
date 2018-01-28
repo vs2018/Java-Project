@@ -14,4 +14,7 @@ public enum ReviewHelpful {
     public int getValue(){
         return this.value;
     }
+
+    public static enum Profession {
+    }
 }

@@ -2,18 +2,18 @@ package Product;
 
 import Enums.Condition;
 import Enums.Department;
+import Person.Seller;
 
 import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Product {
+public abstract class Product {
 
-    String asin;
+    String asin = null;
     Date releaseDate;
     ArrayList<Seller> seller;
     Department department;
@@ -21,8 +21,10 @@ public class Product {
     double price;
     ArrayList<Review> reviews;
     Condition condition;
+    String name;
 
-    public Product(String releaseDate, Seller seller, Department department, double rrp, double price, Condition condition) throws ParseException {
+    public Product(String name, String releaseDate, Department department, double rrp, double price, Condition condition) throws ParseException {
+        this.name = name;
         setAsin();
         this.releaseDate = setReleaseDate(releaseDate);
         this.seller = new ArrayList<>();
@@ -31,6 +33,19 @@ public class Product {
         this.price = price;
         this.condition = condition;
         reviews = new ArrayList<>();
+
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void addReview(Review review){
+        reviews.add(review);
+    }
+
+    public void addSeller(Seller seller){
+        this.seller.add(seller);
     }
 
     public Date setReleaseDate(String releaseDate) throws ParseException {
@@ -40,13 +55,19 @@ public class Product {
     }
 
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static SecureRandom rnd = new SecureRandom();
+    static final SecureRandom rnd = new SecureRandom();
 
-    String randomString(){
-        StringBuilder sb = new StringBuilder( 10 );
-        for( int i = 0; i < 10; i++ )
-            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
-        return sb.toString();
+    public String randomString(){
+//        String identifier = null;
+        if(this.asin == null) {
+            StringBuilder sb = new StringBuilder(10);
+            for (int i = 0; i < 10; i++)
+                sb.append(AB.charAt(rnd.nextInt(AB.length())));
+            return sb.toString();
+        } else {
+            return this.asin;
+        }
+//        return identifier;
     }
 
     public void setAsin(){

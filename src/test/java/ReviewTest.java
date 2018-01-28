@@ -1,12 +1,9 @@
-import Enums.Rating;
-import Enums.ReviewHelpful;
+import Enums.*;
 import Product.Review;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
@@ -62,4 +59,6 @@ public class ReviewTest {
     public void canGetDate(){
         assertEquals(new java.util.Date(System.currentTimeMillis()), review.getReviewDate());
     }
+
+
 }
