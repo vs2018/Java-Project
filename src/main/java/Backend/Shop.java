@@ -50,14 +50,17 @@ public class Shop {
 
 
     public String checkout(Profile profile) {
+
+
+
+
+
         for (Profile checkoutProfile : this.profile) {
             if (profile == checkoutProfile) {
                 for (Product product : checkoutProfile.getBasket()) {
                     checkoutProfile.addItemToOrder(product);
                     this.inventory.removeCorrespondingItem(product);
                 }
-            } else if(profile != checkoutProfile){
-                return "Error";
             }
         }
         profile.emptyBasket();
