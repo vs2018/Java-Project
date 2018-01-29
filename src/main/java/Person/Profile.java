@@ -2,9 +2,15 @@ package Person;
 
 import Backend.*;
 import Enums.DeliveryOption;
+import Enums.OrderRange;
 import Product.Product;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Collection;
+
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 
 public class Profile {
 
@@ -178,5 +184,75 @@ public class Profile {
 
     public double getGiftCardBalance() {
         return this.giftcard.getBalance();
+    }
+
+//    public ArrayList<Product> getOrdersMade30Days() {
+//        ArrayList<Product> orders = new ArrayList<>();
+//        LocalDate today = LocalDate.now();
+//        LocalDate date30 = LocalDate.now().minusMonths(1);
+//        for(Product product: this.orders.getOrders()){
+//            if((product.getCheckOutDate().isAfter(date30) ) && ( product.getCheckOutDate().isBefore(today))){
+//                orders.add(product);
+//            }
+//        }
+//        return orders;
+//    }
+
+//    public ArrayList<Product> getOrdersMade6months() {
+//        ArrayList<Product> orders = new ArrayList<>();
+//        LocalDate today = LocalDate.now();
+//        LocalDate date30 = LocalDate.now().minusMonths(6);
+//        for(Product product: this.orders.getOrders()){
+//            if((product.getCheckOutDate().isAfter(date30) ) && ( product.getCheckOutDate().isBefore(today))){
+//                orders.add(product);
+//            }
+//        }
+//        return orders;
+//    }
+
+    public ArrayList<Product> getOrders(OrderRange range) {
+        ArrayList<Product> orders = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalDate date180 = LocalDate.now().minusMonths(6);
+        LocalDate date30 = LocalDate.now().minusMonths(1);
+        Year thisYear = Year.from( today );
+        Year lastYear = thisYear.minusYears( 1 );
+        LocalDate date2018Start = thisYear.atDay( 1 );
+        LocalDate date2018Finish = thisYear.atDay( 365 );
+        LocalDate date2017Start = lastYear.atDay(1);
+        LocalDate date2017End = lastYear.atDay(365);
+        if (range == OrderRange.ONE) {
+            for (Product product : this.orders.getOrders()) {
+                if ((product.getCheckOutDate().isAfter(date30)) && (product.getCheckOutDate().isBefore(today))) {
+                    orders.add(product);
+                }
+            }
+            return orders;
+        }
+            else if (range == OrderRange.SIX) {
+            for (Product product : this.orders.getOrders()) {
+                if ((product.getCheckOutDate().isAfter(date180)) && (product.getCheckOutDate().isBefore(today))) {
+                    orders.add(product);
+                }
+            }
+            return orders;
+        }
+            else if (range == OrderRange.YEAR_2018) {
+            for (Product product : this.orders.getOrders()) {
+                if ((product.getCheckOutDate().isAfter(date2018Start)) && (product.getCheckOutDate().isBefore(date2018Finish))) {
+                    orders.add(product);
+                }
+            }
+            return orders;
+        }
+            else if (range == OrderRange.YEAR_2017) {
+            for (Product product : this.orders.getOrders()) {
+                if ((product.getCheckOutDate().isAfter(date2017Start)) && (product.getCheckOutDate().isBefore(date2017End))) {
+                    orders.add(product);
+                }
+            }
+            return orders;
+        }
+            return null;
     }
 }

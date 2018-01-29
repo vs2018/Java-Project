@@ -403,14 +403,14 @@ public class BasketTest {
     @Test
     public void canGetOrderHistoryByRange(){
         inventory.setInventory(book);
-        inventory.setInventory(book);
+        inventory.setInventory(book2);
         inventory.setInventory(book);
         inventory.setInventory(music);
-        inventory.setInventory(music);
+        inventory.setInventory(music2);
         inventory.setInventory(music);
         shop.addProfile(profile);
-        shop.addItemToBasket(book, 1, profile);
-        shop.addItemToBasket(music, 1, profile);
+//        shop.addItemToBasket(book, 1, profile);
+//        shop.addItemToBasket(music, 1, profile);
         profile.setDeliveryOption(DeliveryOption.ONE_DAY_DELIVERY);
         GiftCard giftCard = new GiftCard(Amount.HUNDRED, card);
         GiftCard giftCard2 = new GiftCard(Amount.HUNDRED, card2);
@@ -422,10 +422,41 @@ public class BasketTest {
         profile.addGiftCardBalance(giftCard3);
         profile.addGiftCardBalance(giftCard4);
         profile.addGiftCardBalance(giftCard5);
-        shop.buy(profile, "1/25/2018");
+//        shop.buy(profile, "1/25/2018");
+//        assertEquals(0, profile.getBasket().size());
+//        assertEquals(2, profile.getOrders(OrderRange.ONE).size());
+//        assertEquals(2, profile.getOrders(OrderRange.YEAR_2018).size());
         shop.addItemToBasket(book, 1, profile);
         shop.addItemToBasket(music, 1, profile);
-        
+//        profile.setDeliveryOption(DeliveryOption.ONE_DAY_DELIVERY);
+//        GiftCard giftCard6 = new GiftCard(Amount.THREE_HUNDRED, card);
+//        profile.setGiftCard(giftCard6);
+        shop.buy(profile, "12/1/2017");
+        assertEquals(2, profile.getOrders(OrderRange.YEAR_2017).size());
+
+
+//        assertEquals(2, profile.getOrders(OrderRange.SIX).size());
+//        assertEquals(0, profile.getBasket().size());
+        shop.addItemToBasket(book2, 1, profile);
+        shop.addItemToBasket(music2, 1, profile);
+        shop.buy(profile, "12/1/2018");
+        assertEquals(4, profile.getOrder().size());
+        assertEquals(2, profile.getOrders(OrderRange.YEAR_2018).size());
+
+//        assertEquals(4, profile.getOrders(OrderRange.SIX).size());
+//        assertEquals(2, profile.getOrders(OrderRange.YEAR_2017).size());
+//        shop.addItemToBasket(book, 1, profile);
+//        shop.addItemToBasket(music, 1, profile);
+//        profile.setDeliveryOption(DeliveryOption.ONE_DAY_DELIVERY);
+//        GiftCard giftCard7 = new GiftCard(Amount.THREE_HUNDRED, card);
+//        profile.setGiftCard(giftCard7);
+//        shop.buy(profile, "4/1/2017");
+
+
+
+
+
+
 
     }
 

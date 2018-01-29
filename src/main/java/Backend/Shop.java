@@ -52,20 +52,6 @@ public class Shop {
         }
     }
 
-
-    public String checkout(Profile profile) {
-        for (Profile checkoutProfile : this.profile) {
-            if (profile == checkoutProfile) {
-                for (Product product : checkoutProfile.getBasket()) {
-                    checkoutProfile.addItemToOrder(product);
-                    this.inventory.removeCorrespondingItem(product);
-                }
-            }
-        }
-        profile.emptyBasket();
-        return "Successfully checked out";
-    }
-
     public Profile getSpecificProfile(Profile profile) {
         Profile result = null;
         for(Profile checkOutProfile: this.profile){
@@ -91,9 +77,26 @@ public class Shop {
     public void buy(Profile profile, String date) {
         LocalDate convertedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/d/yyyy"));
         Profile checkOutProfile = getSpecificProfile(profile);
-        for(Product product: checkOutProfile.getBasket()){
+        for(Product product: checkOutProfile.getBasket()) {
+            System.out.println(convertedDate);
             product.setCheckOutDate(convertedDate);
+            checkOutProfile.addItemToOrder(product);
+            this.inventory.removeCorrespondingItem(product);
         }
-        checkout(profile);
+        checkOutProfile.emptyBasket();
+//        checkout(profile);
+    }
+
+    public String checkout(Profile profile) {
+        for (Profile checkoutProfile : this.profile) {
+            if (profile == checkoutProfile) {
+                for (Product product : checkoutProfile.getBasket()) {
+                    checkoutProfile.addItemToOrder(product);
+                    this.inventory.removeCorrespondingItem(product);
+                }
+            }
+        }
+        profile.emptyBasket();
+        return "Successfully checked out";
     }
 }

@@ -1,5 +1,6 @@
 package Backend;
 
+import Enums.OrderRange;
 import Product.Product;
 
 import java.util.ArrayList;
@@ -7,8 +8,10 @@ import java.util.ArrayList;
 public class Order {
 
     ArrayList<Product> orders;
+    OrderRange range;
 
     public Order(){
+
         this.orders = new ArrayList<>();
     }
 
@@ -16,7 +19,11 @@ public class Order {
         return this.orders;
     }
 
-//    public void addItemToOrder(Product product){
-//        this.orders.add(product);
-//    }
+    public OrderRange getRange() {
+        return range;
+    }
+
+    public int getRangeValue(){
+        return getRange().getValue();
+    }
 }
