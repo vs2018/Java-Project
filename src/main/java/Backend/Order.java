@@ -16,7 +16,7 @@ public class Order {
         return this.orders;
     }
 
-    public void addItemToOrder(Product product){
-        this.orders.add(product);
-    }
+//    public void addItemToOrder(Product product){
+//        this.orders.add(product);
+//    }
 }

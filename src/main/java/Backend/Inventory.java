@@ -78,17 +78,16 @@ public class Inventory {
         return hash;
     }
 
-
-    public Product removeItemFromInventory(Product product) {
-        Product removedItem = null;
-        for(int i = 0; i < this.inventory.size(); i++){
-            if(this.inventory.get(i) == product){
-                removedItem = this.inventory.remove(i);
-                this.sold.add(removedItem);
-            }
-        }
-        return removedItem;
-    }
+//    public Product removeItemFromInventory(Product product) {
+//        Product removedItem = null;
+//        for(int i = 0; i < this.inventory.size(); i++){
+//            if(this.inventory.get(i) == product){
+//                removedItem = this.inventory.remove(i);
+//                this.sold.add(removedItem);
+//            }
+//        }
+//        return removedItem;
+//    }
 
     public void removeCorrespondingItem(Product product) {
         if(getInventory().remove(product)){

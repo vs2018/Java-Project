@@ -7,6 +7,7 @@ import Person.Seller;
 import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.util.Date;
@@ -22,6 +23,7 @@ public abstract class Product {
     ArrayList<Review> reviews;
     Condition condition;
     String name;
+    LocalDate dateOrdered;
 
     public Product(String name, String releaseDate, Department department, double rrp, double price, Condition condition) throws ParseException {
         this.name = name;
@@ -33,6 +35,7 @@ public abstract class Product {
         this.price = price;
         this.condition = condition;
         reviews = new ArrayList<>();
+        this.dateOrdered = null;
 
     }
 
@@ -107,6 +110,11 @@ public abstract class Product {
     }
 
 
+    public void setCheckOutDate(LocalDate date) {
+        this.dateOrdered = date;
+    }
 
-
+    public LocalDate getCheckOutDate() {
+        return this.dateOrdered;
+    }
 }
