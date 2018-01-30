@@ -1,7 +1,7 @@
-package Person;
+package Product;
 
 import Enums.Profession;
-import Person.Seller;
+import Product.Seller;
 
 public class Individual extends Seller {
 

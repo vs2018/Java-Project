@@ -2,12 +2,12 @@ package Enums;
 
 public enum ExpiryYear {
 
-    YEAR0("2017"),
-    YEAR1("2018"),
-    YEAR2("2019"),
-    YEAR3("2020"),
-    YEAR4("2021"),
-    YEAR5("2022");
+    YEAR2017("2017"),
+    YEAR2018("2018"),
+    YEAR2019("2019"),
+    YEAR2020("2020"),
+    YEAR2021("2021"),
+    YEAR2022("2022");
 
     private final String year;
 

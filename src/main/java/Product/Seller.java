@@ -1,4 +1,4 @@
-package Person;
+package Product;
 
 import Product.Product;
 
@@ -14,6 +14,11 @@ public abstract class Seller {
         products = new ArrayList<>();
     }
 
+    public void addProduct(Product product){
+        this.products.add(product);
+    }
 
-
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
 }

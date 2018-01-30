@@ -8,22 +8,26 @@ import java.util.ArrayList;
 public class Order {
 
     ArrayList<Product> orders;
-    OrderRange range;
+//    OrderRange range;
 
     public Order(){
 
         this.orders = new ArrayList<>();
     }
 
+    public void addProductToOrder(Product product) {
+        this.orders.add(product);
+    }
+
     public ArrayList<Product> getOrders() {
         return this.orders;
     }
 
-    public OrderRange getRange() {
-        return range;
-    }
-
-    public int getRangeValue(){
-        return getRange().getValue();
-    }
+//    public OrderRange getRange() {
+//        return range;
+//    }
+//
+//    public int getRangeValue(){
+//        return getRange().getValue();
+//    }
 }

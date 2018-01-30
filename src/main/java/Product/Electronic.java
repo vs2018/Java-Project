@@ -1,8 +1,6 @@
 package Product;
 
 import Enums.*;
-import Person.Entity;
-import Person.Seller;
 
 import java.text.ParseException;
 

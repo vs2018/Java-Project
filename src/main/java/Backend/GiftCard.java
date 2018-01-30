@@ -17,15 +17,26 @@ public class GiftCard extends Payment {
     PaymentCard card;
     Boolean autoTopUpSchedule;
     Boolean autoTopUpThreshold;
-    TopUpFrequency frequency;
 
 
     public GiftCard(Amount amount, PaymentCard card){
         this.amount = amount;
         this.card = card;
         topUp(amount, card);
-        this.autoTopUpSchedule = null;
-        this.autoTopUpThreshold = null;
+        this.autoTopUpSchedule = false;
+        this.autoTopUpThreshold = false;
+    }
+
+    public PaymentCard getCard() {
+        return card;
+    }
+
+    public Boolean getAutoTopUpSchedule() {
+        return autoTopUpSchedule;
+    }
+
+    public Boolean getAutoTopUpThreshold() {
+        return autoTopUpThreshold;
     }
 
     public void topUpBalanceWithGiftCard(GiftCard card){
@@ -55,7 +66,7 @@ public class GiftCard extends Payment {
     public void topUp(Amount amount, PaymentCard card) {
             double value = getAmountValue();
             if(card.pay()){
-                this.balance = value;
+                this.balance += value;
             }
     }
 

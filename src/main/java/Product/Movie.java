@@ -1,12 +1,8 @@
 package Product;
 
 import Enums.*;
-import Person.Individual;
-import Person.Seller;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public class Movie extends Product{
 

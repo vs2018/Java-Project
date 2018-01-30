@@ -1,6 +1,4 @@
-package Person;
-
-import Person.Seller;
+package Product;
 
 public class Entity extends Seller {
 

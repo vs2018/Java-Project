@@ -4,11 +4,8 @@ import Enums.BookFormat;
 import Enums.Condition;
 import Enums.Department;
 import Enums.ProductState;
-import Person.Individual;
-import Person.Seller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public class Book extends Product {
 

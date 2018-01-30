@@ -14,26 +14,33 @@ public class Basket{
     public Basket(){
 
         this.basket = new ArrayList<>();
-        this.delivery = null;
     }
 
     public double getBasketTotal(){
-        double total = getDeliveryPrice();
+        double total = 0.00;
+        if(delivery != null){
+            total += getDeliveryPrice();
+        }
+        total += getDeliveryPrice();
         for(Product product: this.basket){
             total += product.getPrice();
         }
         return total;
     }
 
-
-
     public DeliveryOption getDelivery() {
         return delivery;
     }
 
     public double getDeliveryPrice(){
-        return getDelivery().getValue();
+        double total = 0.00;
+        if(delivery != null) {
+            total = getDelivery().getValue();
+        }
+        return total;
     }
+
+
 
     public void setDelivery(DeliveryOption delivery) {
         this.delivery = delivery;

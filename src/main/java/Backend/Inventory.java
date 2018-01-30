@@ -15,15 +15,31 @@ public class Inventory {
 
     ArrayList<Product> inventory;
     ArrayList<Product> sold;
-    Book book = new Book("Harry Potter",BookFormat.PAPERBACK, "26-01-2018",Department.BOOKS, 20.50,  15.00,Condition.NEW);
-    Music music = new Music("Best of Enrique",MusicFormat.AUDIO_CD, "26-01-2018",Department.MUSIC, 20.50,  15.00,Condition.NEW);
-    Movie movie = new Movie("Lord of the Rings",MovieFormat.BLU_RAY, "26-01-2018",Department.MOVIES, 20.50,  15.00,Condition.NEW);
-
+    Book book;
+    Music music;
+    Movie movie;
+    Electronic electronic;
 
     public Inventory() throws ParseException {
         this.inventory = new ArrayList<>();
         this.sold = new ArrayList<>();
 
+    }
+
+    public void setProductType(Book product){
+        this.book = book;
+    }
+
+    public void setProductType(Music product){
+        this.music = product;
+    }
+
+    public void setProductType(Movie product){
+        this.movie = product;
+    }
+
+    public void setProductType(Electronic product){
+        this.electronic = product;
     }
 
     public void setInventory(Product product) {
@@ -42,38 +58,40 @@ public class Inventory {
         return sold;
     }
 
-    public HashMap<Product, Integer> getStockLevel(){
-        HashMap<Product, Integer> hash = new HashMap<>();
+    public HashMap<String, Integer> getStockLevel(){
+        HashMap<String, Integer> hash = new HashMap<>();
         for(Product product: this.inventory){
-            if(product.getClass() == movie.getClass()) {
-                Product movie5 = (Movie) product;
-                if (hash.containsKey(movie5)) {
-                    hash.put(movie5, hash.get(movie5) + 1);
-                } else {
-                    hash.put(movie5, 1);
-                }
-            } else if (product.getClass() == music.getClass()){
-                Product music5 = (Music) product;
-                if (hash.containsKey(music5)) {
-                    hash.put(music5, hash.get(music5) + 1);
-                } else {
-                    hash.put(music5, 1);
-                }
-            } else if (product.getClass() == book.getClass()){
-                Product book5 = (Book) product;
-                if (hash.containsKey(book5)) {
-                    hash.put(book5, hash.get(book5) + 1);
-                } else {
-                    hash.put(book5, 1);
-                }
+            if (hash.containsKey(product.getName())) {
+                hash.put(product.getName(), hash.get(product) + 1);
             } else {
-                Product electronic = (Electronic) product;
-                if (hash.containsKey(electronic)) {
-                    hash.put(electronic, hash.get(electronic) + 1);
-                } else {
-                    hash.put(electronic, 1);
-                }
+                hash.put(product.getName(), 1);
             }
+//            if(product.getClass() == movie.getClass()) {
+//                if (hash.containsKey(product)) {
+//                    hash.put(product, hash.get(product) + 1);
+//                } else {
+//                    hash.put(product, 1);
+//                }
+//            } else if (product.getClass() == music.getClass()){
+//                if (hash.containsKey(product)) {
+//                    hash.put(product, hash.get(product) + 1);
+//                } else {
+//                    hash.put(product, 1);
+//                }
+//            } else if (product.getClass() == book.getClass()){
+//                if (hash.containsKey(product)) {
+//                    hash.put(product, hash.get(product) + 1);
+//                } else {
+//                    hash.put(product, 1);
+//                }
+//            } else {
+//                Product electronic = (Electronic) product;
+//                if (hash.containsKey(electronic)) {
+//                    hash.put(electronic, hash.get(electronic) + 1);
+//                } else {
+//                    hash.put(electronic, 1);
+//                }
+//            }
         }
         return hash;
     }

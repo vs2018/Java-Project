@@ -2,20 +2,17 @@ package Product;
 
 import Enums.Condition;
 import Enums.Department;
-import Person.Seller;
 
 import java.security.SecureRandom;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.text.DateFormat;
-import java.util.Date;
 
 public abstract class Product {
 
     String asin = null;
-    Date releaseDate;
+    LocalDate releaseDate;
     ArrayList<Seller> seller;
     Department department;
     double rrp;
@@ -28,7 +25,7 @@ public abstract class Product {
     public Product(String name, String releaseDate, Department department, double rrp, double price, Condition condition) throws ParseException {
         this.name = name;
         setAsin();
-        this.releaseDate = setReleaseDate(releaseDate);
+        setReleaseDate(releaseDate);
         this.seller = new ArrayList<>();
         this.department = department;
         this.rrp = rrp;
@@ -51,10 +48,9 @@ public abstract class Product {
         this.seller.add(seller);
     }
 
-    public Date setReleaseDate(String releaseDate) throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date inputDate = dateFormat.parse(releaseDate);
-        return inputDate;
+    public void setReleaseDate(String releaseDate) throws ParseException {
+        LocalDate convertedDate = LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        this.releaseDate = convertedDate;
     }
 
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -77,7 +73,7 @@ public abstract class Product {
         this.asin = randomString();
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 

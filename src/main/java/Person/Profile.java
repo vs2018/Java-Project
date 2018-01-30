@@ -103,14 +103,10 @@ public class Profile {
         for(Address address: this.addresses){
             if(defaultAddress == address){
                 address.setDefaultDeliveryAddress(true);
-            } else if(defaultAddress != address){
+            } else {
                 address.setDefaultDeliveryAddress(false);
             }
         }
-    }
-
-    public void addAddress(Address address) {
-        this.addresses.add(address);
     }
 
     public void addCard(PaymentCard card) {
@@ -182,9 +178,9 @@ public class Profile {
         this.giftcard = giftCard;
     }
 
-    public double getGiftCardBalance() {
-        return this.giftcard.getBalance();
-    }
+//    public double getGiftCardBalance() {
+//        return this.giftcard.getBalance();
+//    }
 
 //    public ArrayList<Product> getOrdersMade30Days() {
 //        ArrayList<Product> orders = new ArrayList<>();

@@ -7,11 +7,15 @@ public class Address {
     Boolean sunday;
     Boolean defaultDeliveryAddress;
 
-    public Address(String Address){
+    public Address(String address){
         this.address = address;
         this.saturday = false;
         this.sunday = false;
         this.defaultDeliveryAddress = false;
+    }
+
+    public Boolean getDefaultDeliveryAddress() {
+        return defaultDeliveryAddress;
     }
 
     public String getAddress() {

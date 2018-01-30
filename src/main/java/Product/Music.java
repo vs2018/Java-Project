@@ -1,10 +1,8 @@
 package Product;
 
 import Enums.*;
-import Person.Seller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public class Music extends Product {
 
