@@ -1,136 +1,107 @@
-import Backend.Address;
-import Backend.Inventory;
-import Backend.Shop;
+import Backend.*;
+import Enums.*;
 import Person.Profile;
-import Product.Product;
+import Product.*;
 import org.junit.Before;
+import org.junit.Test;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+
 public class ShopTest {
 
+    Inventory inventory;
     Shop shop;
     Profile profile;
+    Basket basket;
+    Basket basket2;
+    Order order;
+    Address address;
+    PaymentCard card;
+    WishList wishlist;
+    Book book;
+    Music music;
+    Movie movie;
+    Profile profile2;
+    Address address2;
 
 
     @Before
-    public void before(){
-        
+    public void before() throws ParseException {
+        inventory = new Inventory();
+        shop = new Shop(inventory);
+        book = new Book("Harry Potter", BookFormat.PAPERBACK, "1/1/2018", Department.BOOKS, 1000.50,  100.00, Condition.NEW);
+        music = new Music("Best of Enrique", MusicFormat.AUDIO_CD, "1/1/2018", Department.MUSIC, 20.50,  100.00, Condition.NEW);
+        movie = new Movie("Lord of the Rings", MovieFormat.BLU_RAY, "1/1/2018", Department.MOVIES, 20.50,  100.00, Condition.NEW);
+        basket = new Basket();
+        basket2 = new Basket();
+        wishlist = new WishList();
+        order = new Order();
+        address = new Address("8 Castle Terrace");
+        address.setDefaultDeliveryAddress(false);
+        address2 = new Address("10 Castle Terrace");
+        card = new PaymentCard("Vishal", "1234567891234567", ExpiryMonth.JANUARY, ExpiryYear.YEAR2019);
+        profile2 = new Profile(basket2, order, address, card, "codeclan2@gmail.com", 07770617773, wishlist);
+        profile = new Profile(basket, order, address, card, "codeclan@gmail.com", 07770617773, wishlist);
+    }
+
+    @Test
+    public void canGetProperties(){
+        assertEquals(inventory, shop.getInventory());
+        shop.addProfile(profile2);
+        assertEquals(1, shop.getProfile().size());
+    }
+
+    @Test
+    public void canAddItemToBasket() {
+        shop.addProfile(profile);
+        shop.addProfile(profile2);
+        inventory.setInventory(book);
+        inventory.setInventory(book);
+        inventory.setInventory(book);
+        inventory.setInventory(music);
+        shop.addItemToBasket(book, 2, profile);
+        shop.addItemToBasket(book, 1, profile2);
+        assertEquals(2, profile.getBasket().size());
+        assertEquals(1, profile2.getBasket().size());
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Inventory inventory;
-    ArrayList<Profile> profile;
-
-    public Shop(Inventory inventory) {
-        this.inventory = inventory;
-        this.profile = new ArrayList<>();
-
-
-    }
-
-    public Inventory getInventory() {
-        return this.inventory;
-    }
-
-    public ArrayList<Profile> getProfile() {
-        return this.profile;
-    }
-
-    public void addProfile(Profile profile) {
-        this.profile.add(profile);
-    }
-
-    public String addItemToBasket(Product product, int quantity, Profile profile3) {
-        if (inventory.getStockLevel().containsKey(product)) {
-            if (inventory.getStockLevel().get(product) >= quantity) {
-                for (Profile profile : this.profile) {
-                    if (profile == profile3) {
-                        for (int i = 0; i < quantity; i++) {
-//                            Product removedItem = inventory.removeItemFromInventory(product);
-                            profile.AddtoBasket(product);
-                        }
-                    }
-                }
-            } else if (inventory.getStockLevel().get(product) < quantity) {
-                return "Insufficient stock, only" + inventory.getStockLevel().get(product) + " available";
-            }
-            return "No stock available, check again at a later date";
-        } else {
-            return "Item does not exist and no stock available, check again at a later date";
+        @Test
+        public void canGetDefaultDeliveryAddress(){
+            address2.setDefaultDeliveryAddress(true);
+            profile.addAddresstoList(address2);
+            shop.addProfile(profile2);
+            shop.addProfile(profile);
+            assertEquals(profile, shop.getSpecificProfile(profile));
+            assertEquals(address2, shop.getDefaultDeliveryAddress(profile));
         }
-    }
 
-    public Profile getSpecificProfile(Profile profile) {
-        Profile result = null;
-        for(Profile checkOutProfile: this.profile){
-            if(checkOutProfile == profile){
-                result = checkOutProfile;
-            }
-        }
-        return result;
-    }
 
-    public Address getDefaultDeliveryAddress(Profile profile) {
-        Address result = null;
-        Profile checkOutProfile = getSpecificProfile(profile);
-        for(Address address: checkOutProfile.getAddressList()){
-            if(Boolean.TRUE.equals(address.getDeliveryAddress())) {
-                result = address;
-            }
-        }
-        return result;
+    @Test
+    public void canBuy(){
+        shop.addProfile(profile);
+        shop.addProfile(profile2);
+        inventory.setInventory(book);
+        inventory.setInventory(book);
+        inventory.setInventory(book);
+        inventory.setInventory(music);
+        shop.addItemToBasket(book, 2, profile);
+        shop.addItemToBasket(book, 1, profile2);
+        shop.buy(profile, "1/2/2018");
+        assertEquals(0, profile.getBasket().size());
+        assertEquals(1, profile2.getBasket().size());
+        assertEquals(2, inventory.getInventory().size());
+        assertEquals(2, inventory.getSold().size());
+        assertEquals(2, profile.getOrder().size());
+        assertEquals(2, profile.getOrders(OrderRange.YEAR_2018).size());
     }
 
 
-    public void buy(Profile profile, String date) {
-        LocalDate convertedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/d/yyyy"));
-        Profile checkOutProfile = getSpecificProfile(profile);
-        for(Product product: checkOutProfile.getBasket()) {
-            System.out.println(convertedDate);
-            product.setCheckOutDate(convertedDate);
-            checkOutProfile.addItemToOrder(product);
-            this.inventory.removeCorrespondingItem(product);
-        }
-        checkOutProfile.emptyBasket();
-//        checkout(profile);
-    }
 
-    public String checkout(Profile profile) {
-        for (Profile checkoutProfile : this.profile) {
-            if (profile == checkoutProfile) {
-                for (Product product : checkoutProfile.getBasket()) {
-                    checkoutProfile.addItemToOrder(product);
-                    this.inventory.removeCorrespondingItem(product);
-                }
-            }
-        }
-        profile.emptyBasket();
-        return "Successfully checked out";
-    }
 }
+

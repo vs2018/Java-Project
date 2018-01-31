@@ -62,7 +62,7 @@ public class Inventory {
         HashMap<String, Integer> hash = new HashMap<>();
         for(Product product: this.inventory){
             if (hash.containsKey(product.getName())) {
-                hash.put(product.getName(), hash.get(product) + 1);
+                hash.put(product.getName(), hash.get(product.getName()) + 1);
             } else {
                 hash.put(product.getName(), 1);
             }

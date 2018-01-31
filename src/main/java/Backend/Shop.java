@@ -32,24 +32,38 @@ public class Shop {
         this.profile.add(profile);
     }
 
-    public String addItemToBasket(Product product, int quantity, Profile profile3) {
-        if (inventory.getStockLevel().containsKey(product)) {
-            if (inventory.getStockLevel().get(product) >= quantity) {
-                for (Profile profile : this.profile) {
-                    if (profile == profile3) {
-                        for (int i = 0; i < quantity; i++) {
-//                            Product removedItem = inventory.removeItemFromInventory(product);
-                            profile.AddtoBasket(product);
-                        }
-                    }
-                }
-            } else if (inventory.getStockLevel().get(product) < quantity) {
-                return "Insufficient stock, only" + inventory.getStockLevel().get(product) + " available";
-            }
-            return "No stock available, check again at a later date";
-        } else {
-            return "Item does not exist and no stock available, check again at a later date";
-        }
+//    public String addItemToBasket(Product product, int quantity, Profile profile3) {
+//        if (inventory.getStockLevel().containsKey(product.getName())) {
+//            if (inventory.getStockLevel().get(product.getName()) >= quantity) {
+//                Profile profile = getSpecificProfile(profile3);
+//                        for (int i = 0; i < quantity; i++) {
+////                            Product removedItem = inventory.removeItemFromInventory(product);
+//                            profile.AddtoBasket(product);
+//                        }
+//                }
+//            } else if (inventory.getStockLevel().get(product.getName()) < quantity) {
+//                return "Insufficient stock, only" + inventory.getStockLevel().get(product.getName()) + " available";
+//            }
+//        else {
+//            return "There is no stock available at present, check again at a later date";
+//        }
+//        return "Item added to basket";
+//    }
+
+    public void addItemToBasket(Product product, int quantity, Profile profile){
+      for(Profile specificProfile: this.profile){
+          if(specificProfile == profile){
+              if((inventory.getStockLevel().containsKey(product.getName()) && (inventory.getStockLevel().get(product.getName()) >= quantity))){
+                  for (int i = 0; i < quantity; i++) {
+                      specificProfile.AddtoBasket(product);
+                  }
+              } else if ((inventory.getStockLevel().containsKey(product.getName()) && (inventory.getStockLevel().get(product.getName()) < quantity))){
+                  for (int i = 0; i < inventory.getStockLevel().get(product.getName()); i++) {
+                      specificProfile.AddtoBasket(product);
+                  }
+              }
+          }
+      }
     }
 
     public Profile getSpecificProfile(Profile profile) {
@@ -78,7 +92,6 @@ public class Shop {
         LocalDate convertedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/d/yyyy"));
         Profile checkOutProfile = getSpecificProfile(profile);
         for(Product product: checkOutProfile.getBasket()) {
-            System.out.println(convertedDate);
             product.setCheckOutDate(convertedDate);
             checkOutProfile.addItemToOrder(product);
             this.inventory.removeCorrespondingItem(product);
@@ -87,16 +100,16 @@ public class Shop {
 //        checkout(profile);
     }
 
-    public String checkout(Profile profile) {
-        for (Profile checkoutProfile : this.profile) {
-            if (profile == checkoutProfile) {
-                for (Product product : checkoutProfile.getBasket()) {
-                    checkoutProfile.addItemToOrder(product);
-                    this.inventory.removeCorrespondingItem(product);
-                }
-            }
-        }
-        profile.emptyBasket();
-        return "Successfully checked out";
-    }
+//    public String checkout(Profile profile) {
+//        for (Profile checkoutProfile : this.profile) {
+//            if (profile == checkoutProfile) {
+//                for (Product product : checkoutProfile.getBasket()) {
+//                    checkoutProfile.addItemToOrder(product);
+//                    this.inventory.removeCorrespondingItem(product);
+//                }
+//            }
+//        }
+//        profile.emptyBasket();
+//        return "Successfully checked out";
+//    }
 }

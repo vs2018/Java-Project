@@ -56,7 +56,7 @@ public abstract class Product {
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static final SecureRandom rnd = new SecureRandom();
 
-    public String randomString(){
+    private String randomString(){
 //        String identifier = null;
         if(this.asin == null) {
             StringBuilder sb = new StringBuilder(10);
@@ -69,7 +69,7 @@ public abstract class Product {
 //        return identifier;
     }
 
-    public void setAsin(){
+    private void setAsin(){
         this.asin = randomString();
     }
 
